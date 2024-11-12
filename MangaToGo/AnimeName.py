@@ -86,7 +86,7 @@ def images_to_PDF(completions, pdfNum):
         for x in range(len(completions))
     ]
 
-    pdf_path = f"{local_folder}/pdf/Chapter{pdfNum}.pdf"
+    pdf_path = f"{local_folder}/Chapter{pdfNum}.pdf"
     
     # Save the first image and append the rest as a PDF
     images[0].save(
