@@ -142,7 +142,7 @@ def main():
 	#Asks for the manga chapter and stores it	
 	desiredChapter = int(input("Which chapter do you want?"))
 
-	chapterID = ids[desiredChapter-1][0]
+	chapterID = sorted_data[desiredChapter-1][0]
 	#print(chapterID)
 
 
