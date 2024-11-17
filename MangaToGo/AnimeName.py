@@ -2,7 +2,7 @@ from PIL import Image
 import requests
 import json
 import os, os.path
-from pathlib import path
+from pathlib import Path
 
 
 base_url = 'https://api.mangadex.org/'
@@ -29,7 +29,7 @@ def create_path_file():
 
 if Path(create_path_file()).exists:
 	local_folder = create_path_file()
-	
+
 
 
 
