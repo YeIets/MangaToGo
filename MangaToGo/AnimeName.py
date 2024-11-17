@@ -2,12 +2,11 @@ from PIL import Image
 import requests
 import json
 import os, os.path
+from pathlib import path
 
 
 base_url = 'https://api.mangadex.org/'
 base_url_download = 'https://uploads.mangadex.org/data-saver/'
-
-local_folder = None
 
 
 
@@ -25,9 +24,12 @@ def create_path_file():
 	userFile.write(folder_path+"/")
 	userFile.close()
 
+	return user_path
 
 
-
+if Path(create_path_file()).exists:
+	local_folder = create_path_file()
+	
 
 
 
