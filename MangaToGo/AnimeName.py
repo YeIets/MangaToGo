@@ -5,9 +5,9 @@ import os, os.path
 from pathlib import Path
 
 
-base_url = 'https://api.mangadex.org/'
-base_url_download = 'https://uploads.mangadex.org/data-saver/'
-LOCAL = None
+BASE_URL = 'https://api.mangadex.org/'
+BASE_URL_DOWNLOAD = 'https://uploads.mangadex.org/data-saver/'
+LOCAL_PATH = None
 
 
 
@@ -27,7 +27,7 @@ def create_path_file():
 	local_folder = str(user_path)
 	LOCAL = local_folder
 
-	return LOCAL
+	return LOCALj
 
 
 
@@ -58,7 +58,7 @@ def get_manga_id(title):
 #Fetches the manga chapter given the manga ID and returns the json response
 
 def get_chapter_id(mangaid):
-	url = f"{base_url}/manga/{mangaid}/feed"
+	url = f"{BASE_URL}/manga/{mangaid}/feed"
 	response = requests.get(url)
 
 	jsonResponse = response.json()
@@ -74,7 +74,7 @@ def get_chapter_id(mangaid):
 
 def get_chapter_imgs(chapterid):
 
-	url = f"{base_url}/at-home/server/{chapterid}"
+	url = f"{BASE_URL}/at-home/server/{chapterid}"
 	response = requests.get(url)
 
 	jsonResponse = response.json()
@@ -92,7 +92,7 @@ def download_image(completions, hash):
 
     for x in range(len(completions)):
 
-        image_url = f'{base_url_download}/{hash}/{completions[x]}'
+        image_url = f'{BASE_URL_DOWNLOAD}/{hash}/{completions[x]}'
         save_as = f"Img{x}.jpg"
 
         # This line should be at the same level as the above ones
@@ -112,11 +112,11 @@ def images_to_PDF(completions, pdfNum):
     target_size = (1080, 1696)
 
     images = [
-        Image.open(f"{local_folder}/Img{x}.jpg").resize(target_size)
+        Image.open(f"{LOCAL_PATH}/Img{x}.jpg").resize(target_size)
         for x in range(len(completions))
     ]
 
-    pdf_path = f"{local_folder}/Chapter{pdfNum}.pdf"
+    pdf_path = f"{LOCAL_PATH}/Chapter{pdfNum}.pdf"
     
     # Save the first image and append the rest as a PDF
     images[0].save(
