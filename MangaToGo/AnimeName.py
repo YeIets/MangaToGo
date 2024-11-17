@@ -27,7 +27,9 @@ def create_path_file():
 	local_folder = str(user_path)
 	LOCAL = local_folder
 
-	return LOCALj
+	open1 = open(user_path)
+	print(open1.read())
+	
 
 
 
