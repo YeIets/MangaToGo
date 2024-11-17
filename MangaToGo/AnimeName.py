@@ -15,7 +15,6 @@ local_folder = None
 
 def create_path_file(folder_path):
 
-	folder_path = input("Input the folder path for your pdfs to be saved: ")
 	user_file_name = "userPath.txt"
 
 	user_path = os.path.join(folder_path, user_file_name)
@@ -129,6 +128,8 @@ def images_to_PDF(completions, pdfNum):
 
 def main():
 
+	folder_path = input("Input the folder path for your pdfs to be saved: ")
+	create_path_file(folder_path)
 	print(local_folder)
 
 
