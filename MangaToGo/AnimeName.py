@@ -25,7 +25,7 @@ def create_path_file():
 	userFile.write(folder_path)
 	userFile.close()
 
-	return user_path
+	return str(user_path)
 
 
 
