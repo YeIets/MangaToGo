@@ -11,7 +11,8 @@ BASE_URL_DOWNLOAD = 'https://uploads.mangadex.org/data-saver/'
 
 #Creates a file with the folder path where the downloaded images and the pdf will be saved
 
-def create_path_file():
+def create_path_file(folder_path):
+
 
 	folder_path = input("Input the folder path for your pdfs to be saved: ")
 	user_file_name = "userPath.txt"
@@ -131,7 +132,7 @@ def images_to_PDF(completions, pdfNum):
 
 def main():
 
-	print(LOCAL_FILE)
+	
 
 
 
