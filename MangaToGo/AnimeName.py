@@ -17,9 +17,9 @@ local_folder = None
 def create_path_file():
 
 	folder_path = input("Input the folder path for your pdfs to be saved: ")
-	user_file_name = "userPath"
+	user_file_name = "userPath.txt"
 
-	user_path = os.path.join(local_folder, user_file_name+".txt")
+	user_path = os.path.join(local_folder, user_file_name)
 
 	userFile = open(user_path, "w")
 	userFile.write(folder_path)
