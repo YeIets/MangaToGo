@@ -7,7 +7,7 @@ from pathlib import Path
 
 base_url = 'https://api.mangadex.org/'
 base_url_download = 'https://uploads.mangadex.org/data-saver/'
-local_folder = None
+LOCAL = None
 
 
 
@@ -25,8 +25,9 @@ def create_path_file():
 	userFile.close()
 
 	local_folder = str(user_path)
+	LOCAL = local_folder
 
-	return local_folder
+	return LOCAL
 
 
 
