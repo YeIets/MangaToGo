@@ -131,8 +131,8 @@ def images_to_PDF(completions, pdfNum):
 def main():
 
 	if create_path_file != None:
-		#path = create_path_file
-		open1 = open(create_path_file, "r")
+		path = os.path(create_path_file)
+		open1 = open(path, "r")
 		local_folder = open1.read()
 
 
