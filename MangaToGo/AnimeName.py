@@ -7,7 +7,6 @@ from pathlib import Path
 
 BASE_URL = 'https://api.mangadex.org/'
 BASE_URL_DOWNLOAD = 'https://uploads.mangadex.org/data-saver/'
-LOCAL_PATH = None
 LOCAL_FILE = None
 
 
@@ -27,7 +26,7 @@ def create_path_file():
 
 	local_folder = str(user_path)
 
-	LOCAL_PATH = local_folder
+	return local_folder
 
 
 	#open1 = open(user_path)
@@ -35,6 +34,7 @@ def create_path_file():
 	
 
 
+LOCAL_PATH = create_path_file()
 
 
 
@@ -135,7 +135,6 @@ def images_to_PDF(completions, pdfNum):
 
 def main():
 
-	create_path_file()
 	print(LOCAL_PATH)
 
 
