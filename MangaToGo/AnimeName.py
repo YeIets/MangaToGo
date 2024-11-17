@@ -1,12 +1,47 @@
 from PIL import Image 
 import requests
 import json
-import os
+import os, os.path
 
 
 base_url = 'https://api.mangadex.org/'
 base_url_download = 'https://uploads.mangadex.org/data-saver/'
-local_folder= '/home/omar/HOME/MangaToGo/'
+
+local_folder = None
+
+
+if create_path_file != None:
+		open1 = open(create_path_file, "r").read()
+		local_folder = open1.read()
+
+
+
+
+
+
+#Creates a file with the folder path where the downloaded images and the pdf will be saved
+
+def create_path_file():
+
+	folder_path = raw_input("Input the folder path for your pdfs to be saved")
+	#user_file_name = "userPath"
+
+	user_path = os.path.join(local_folder, "userPath.txt")
+
+	userFile = open(user_path, "w")
+	userFile.write(folder_path)
+	userFile.close()
+
+	return folder_path
+
+
+
+
+
+
+
+
+
 
 
 #Fetches the manga by title and returns the json response
@@ -101,6 +136,34 @@ def images_to_PDF(completions, pdfNum):
 
 
 def main():
+
+	if create_path_file != :
+		pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	#manga is a "list" and manga's elements are "tuples" containing strings
 
