@@ -131,7 +131,6 @@ def images_to_PDF(completions, pdfNum):
 def main():
 
 	print(create_path_file())
-	print(local_folder)
 
 
 
