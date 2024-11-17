@@ -42,7 +42,7 @@ def get_chapter_id(mangaid):
 
 	return ids
 
-#Fetches the manga chapter "images" and the HASH to complete the URL 
+#Fetches the manga chapters "URL" for each image and the HASH to complete the urls  
 
 def get_chapter_imgs(chapterid):
 
@@ -57,7 +57,8 @@ def get_chapter_imgs(chapterid):
 	return imgs
 
 
-#Downloads all images 
+#Downloads all images to the specified path 
+
 
 def download_image(completions, hash):
 
@@ -75,6 +76,7 @@ def download_image(completions, hash):
 
 
 #Puts all the images into a PDF
+#The pdf is saved to the same path where the images where downloaded
 
 
 def images_to_PDF(completions, pdfNum):
