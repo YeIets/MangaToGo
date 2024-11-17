@@ -13,8 +13,9 @@ local_folder = None
 
 #Creates a file with the folder path where the downloaded images and the pdf will be saved
 
-def create_path_file(folder_path):
+def create_path_file():
 
+	folder_path = input("Input the folder path for your pdfs to be saved: ")
 	user_file_name = "userPath.txt"
 
 	user_path = os.path.join(folder_path, user_file_name)
@@ -23,7 +24,7 @@ def create_path_file(folder_path):
 	userFile.write(folder_path+"/")
 	userFile.close()
 
-	local_folder = user_path
+	local_folder = str(user_path)
 
 	return local_folder
 
@@ -128,8 +129,7 @@ def images_to_PDF(completions, pdfNum):
 
 def main():
 
-	folder_path = input("Input the folder path for your pdfs to be saved: ")
-	create_path_file(folder_path)
+	create_path_file()
 	print(local_folder)
 
 
