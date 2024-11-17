@@ -25,7 +25,6 @@ def create_path_file():
 	userFile.write(folder_path+"/")
 	userFile.close()
 
-	return userFile.read()
 
 
 
@@ -130,7 +129,7 @@ def images_to_PDF(completions, pdfNum):
 
 def main():
 
-	print(create_path_file())
+	create_path_file()
 
 
 
