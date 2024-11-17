@@ -31,7 +31,7 @@ def create_path_file():
 
 
 LOCAL_PATH = create_path_file()
-LOCAL_FILE = LOCAL_PATH + "userPath.txt"
+LOCAL_FILE = LOCAL_PATH + "/userPath.txt"
 
 
 
@@ -131,7 +131,7 @@ def images_to_PDF(completions, pdfNum):
 
 def main():
 
-	print(LOCAL_PATH)
+	print(LOCAL_FILE)
 
 
 
