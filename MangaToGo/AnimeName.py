@@ -10,13 +10,6 @@ base_url_download = 'https://uploads.mangadex.org/data-saver/'
 local_folder = None
 
 
-if create_path_file != None:
-		open1 = open(create_path_file, "r").read()
-		local_folder = open1.read()
-
-
-
-
 
 
 #Creates a file with the folder path where the downloaded images and the pdf will be saved
@@ -138,7 +131,8 @@ def images_to_PDF(completions, pdfNum):
 def main():
 
 	if create_path_file != None:
-		open1 = open(create_path_file, "r").read()
+		#path = create_path_file
+		open1 = open(create_path_file, "r")
 		local_folder = open1.read()
 
 
