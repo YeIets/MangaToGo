@@ -4,7 +4,8 @@ import json
 import os, os.path
 from pathlib import Path
 
-home = os.path.expanduser('~')
+#home = os.path.expanduser('~')
+home = '/home/omar/Documents'
 nested = 'MangaToGO/Chapters'
 
 BASE_URL = 'https://api.mangadex.org/'
