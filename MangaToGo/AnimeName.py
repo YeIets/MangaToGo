@@ -112,7 +112,7 @@ def main():
 		pass
 	else:
 		os.makedirs(LOCAL_PATH)
-		userFile = open(LOCAL_FILE, "w")
+		userFile = open(LOCAL_FILE, "r+")
 		userFile.write(LOCAL_PATH)
 		print(userFile.read())
 		userFile.close()
