@@ -12,6 +12,11 @@ BASE_URL_DOWNLOAD = 'https://uploads.mangadex.org/data-saver/'
 LOCAL_PATH = home + '/MangaToGO/Chapters'
 LOCAL_FILE = home + '/MangaToGO/userPath.txt'
 
+def get_local_folder():
+	f = open(LOCAL_FILE, "r")
+	return f.read()
+
+
 
 #Fetches the manga by title and returns the json response
 
@@ -69,7 +74,7 @@ def download_image(completions, hash):
     for x in range(len(completions)):
 
         image_url = f'{BASE_URL_DOWNLOAD}/{hash}/{completions[x]}'
-        save_as = f"{LOCAL_PATH}/Img{x}.jpg"
+        save_as = f"{get_local_folder}/Img{x}.jpg"
 
         response = requests.get(image_url)
 
@@ -86,11 +91,11 @@ def images_to_PDF(completions, pdfNum):
     target_size = (1080, 1696)
 
     images = [
-        Image.open(f"{LOCAL_PATH}/Img{x}.jpg").resize(target_size)
+        Image.open(f"{get_local_folder}/Img{x}.jpg").resize(target_size)
         for x in range(len(completions))
     ]
 
-    pdf_path = f"{LOCAL_PATH}/Chapter{pdfNum}.pdf"
+    pdf_path = f"{get_local_folder}/Chapter{pdfNum}.pdf"
     
     # Save the first image and append the rest as a PDF
     images[0].save(
@@ -111,6 +116,11 @@ def main():
 		userFile = open(LOCAL_FILE, "w")
 		userFile.write(LOCAL_PATH)
 		userFile.close()
+
+
+	folder = get_local_folder()
+
+
 
 	#manga is a "list" and manga's elements are "tuples" containing strings
 
@@ -168,7 +178,7 @@ def main():
 	images_to_PDF(url_completions, desiredChapter)
 
 	for x in range(len(url_completions)):
-		os.remove(f"{local_folder}/Img{x}.jpg")
+		os.remove(f"{folder}/Img{x}.jpg")
 
 
 
