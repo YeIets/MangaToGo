@@ -148,11 +148,10 @@ def main():
 	))
 
 	for x in range(len(sorted_data)):
-		element = ids.pop(0)
+		element = sorted_data.pop(0)
 		sorted_data.append(element)
 
-		print(f"{x+1} Chapter = {element[2]} - ID = {element[x][0]}")
-		#print(f"{x+1} - Vol = {element[1]} - Chapter = {element[2]} - Language = {element[3]}")
+		print(f"{x+1} - Vol = {element[1]} - Chapter = {element[2]} - Language = {element[3]}")
 
 	#Asks for the manga chapter and stores it	
 	desiredChapter = int(input("Which chapter do you want?"))
