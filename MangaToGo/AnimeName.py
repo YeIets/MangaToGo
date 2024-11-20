@@ -69,12 +69,10 @@ def download_image(completions, hash):
     for x in range(len(completions)):
 
         image_url = f'{BASE_URL_DOWNLOAD}/{hash}/{completions[x]}'
-        save_as = f"Img{x}.jpg"
+        save_as = f"{LOCAL_PATH}/Img{x}.jpg"
 
-        # This line should be at the same level as the above ones
         response = requests.get(image_url)
 
-        # This block should be inside the for loop
         with open(save_as, 'wb') as file:
             file.write(response.content)
 
@@ -113,33 +111,6 @@ def main():
 		userFile = open(LOCAL_FILE, "w")
 		userFile.write(LOCAL_PATH)
 		userFile.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	#manga is a "list" and manga's elements are "tuples" containing strings
 
