@@ -11,7 +11,7 @@ nested = 'MangaToGO/Chapters'
 BASE_URL = 'https://api.mangadex.org/'
 BASE_URL_DOWNLOAD = 'https://uploads.mangadex.org/data-saver/'
 LOCAL_PATH = home + '/MangaToGO/Chapters'
-LOCAL_FILE = LOCAL_PATH + '/User.txt'
+LOCAL_FILE = home + '/MangaToGO/userPath.txt'
 
 
 #Fetches the manga by title and returns the json response
