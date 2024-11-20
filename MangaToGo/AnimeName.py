@@ -26,7 +26,7 @@ def create_path_file(folder_path):
 
 	user_path = os.path.join(folder_path, user_file_name)
 
-	userFile = open(user_path, "w")
+	userFile = open("userPath.txt", "w")
 	userFile.write(folder_path+"/")
 	userFile.close()
 
@@ -139,6 +139,9 @@ def main():
 		pass
 	else:
 		os.makedirs(LOCAL_PATH)
+		userFile = open("userPath.txt", "w")
+		userFile.write(LOCAL_PATH)
+		userFile.close()
 
 
 
