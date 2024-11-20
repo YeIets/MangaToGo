@@ -71,7 +71,6 @@ def get_chapter_imgs(chapterid):
 
 def download_image(completions, hash):
 
-	print("DOWNLOADING")
     for x in range(len(completions)):
 
         image_url = f'{BASE_URL_DOWNLOAD}/{hash}/{completions[x]}'
