@@ -147,7 +147,7 @@ def main():
 		x[3] if x[3] is not None else '',
 	))
 
-	for x in range(len(sorted_data):
+	for x in range(len(sorted_data)):
 		element = ids.pop(0)
 		sorted_data.append(element)
 
