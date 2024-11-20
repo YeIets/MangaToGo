@@ -135,7 +135,6 @@ def images_to_PDF(completions, pdfNum):
 def main():
 
 	if os.path.exists(LOCAL_PATH):
-		print("Already exists")
 		pass
 	else:
 		os.makedirs(LOCAL_PATH)
