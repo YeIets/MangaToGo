@@ -1,12 +1,16 @@
 from PIL import Image 
 import requests
 import json
-import os
+import os, os.path
+from pathlib import Path
 
+home = os.path.expanduser('~')
+nested = 'MangaToGO/Chapters'
 
-base_url = 'https://api.mangadex.org/'
-base_url_download = 'https://uploads.mangadex.org/data-saver/'
-local_folder= '/home/omar/HOME/MangaToGo/'
+BASE_URL = 'https://api.mangadex.org/'
+BASE_URL_DOWNLOAD = 'https://uploads.mangadex.org/data-saver/'
+LOCAL_PATH = home + '/MangaToGO/Chapters'
+LOCAL_FILE = home + '/MangaToGO/userPath.txt'
 
 
 #Fetches the manga by title and returns the json response
@@ -30,7 +34,7 @@ def get_manga_id(title):
 #Fetches the manga chapter given the manga ID and returns the json response
 
 def get_chapter_id(mangaid):
-	url = f"{base_url}/manga/{mangaid}/feed"
+	url = f"{BASE_URL}/manga/{mangaid}/feed"
 	response = requests.get(url)
 
 	jsonResponse = response.json()
@@ -46,7 +50,7 @@ def get_chapter_id(mangaid):
 
 def get_chapter_imgs(chapterid):
 
-	url = f"{base_url}/at-home/server/{chapterid}"
+	url = f"{BASE_URL}/at-home/server/{chapterid}"
 	response = requests.get(url)
 
 	jsonResponse = response.json()
@@ -64,7 +68,7 @@ def download_image(completions, hash):
 
     for x in range(len(completions)):
 
-        image_url = f'{base_url_download}/{hash}/{completions[x]}'
+        image_url = f'{BASE_URL_DOWNLOAD}/{hash}/{completions[x]}'
         save_as = f"Img{x}.jpg"
 
         # This line should be at the same level as the above ones
@@ -84,11 +88,11 @@ def images_to_PDF(completions, pdfNum):
     target_size = (1080, 1696)
 
     images = [
-        Image.open(f"{local_folder}/Img{x}.jpg").resize(target_size)
+        Image.open(f"{LOCAL_PATH}/Img{x}.jpg").resize(target_size)
         for x in range(len(completions))
     ]
 
-    pdf_path = f"{local_folder}/Chapter{pdfNum}.pdf"
+    pdf_path = f"{LOCAL_PATH}/Chapter{pdfNum}.pdf"
     
     # Save the first image and append the rest as a PDF
     images[0].save(
@@ -101,6 +105,41 @@ def images_to_PDF(completions, pdfNum):
 
 
 def main():
+
+	if os.path.exists(LOCAL_PATH):
+		pass
+	else:
+		os.makedirs(LOCAL_PATH)
+		userFile = open(LOCAL_FILE, "w")
+		userFile.write(LOCAL_PATH)
+		userFile.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	#manga is a "list" and manga's elements are "tuples" containing strings
 
