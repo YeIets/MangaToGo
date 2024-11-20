@@ -16,7 +16,7 @@ LOCAL_FILE = home + '/MangaToGO/userPath.txt'
 #Fetches the manga by title and returns the json response
 
 def get_manga_id(title):
-	url = f"{base_url}/manga"
+	url = f"{BASE_URL}/manga"
 	response = requests.get(
 		url,
 		params={"title":title}
