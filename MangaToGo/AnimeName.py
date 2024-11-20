@@ -137,7 +137,7 @@ def main():
 	if os.path.exists(LOCAL_PATH):
 		pass
 	else:
-		os.makedirs(nested)
+		os.makedirs(LOCAL_PATH)
 
 
 
