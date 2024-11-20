@@ -48,7 +48,7 @@ def get_chapter_id(mangaid):
 		chapters["attributes"]["volume"], 
 		chapters["attributes"]["chapter"],
 		chapters["attributes"]["translatedLanguage"],
-		chapters["attributes"]["externalURL"]) for chapters in jsonResponse["data"]]	
+		chapters["attributes"]["externalUrl"]) for chapters in jsonResponse["data"]]	
 
 	return ids
 
