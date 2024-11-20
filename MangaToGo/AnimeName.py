@@ -14,34 +14,6 @@ LOCAL_PATH = home + '/MangaToGO/Chapters'
 LOCAL_FILE = LOCAL_PATH + '/User.txt'
 
 
-
-
-#Creates a file with the folder path where the downloaded images and the pdf will be saved
-
-def create_path_file(folder_path):
-
-
-	folder_path = input("Input the folder path for your pdfs to be saved: ")
-	user_file_name = "userPath.txt"
-
-	user_path = os.path.join(folder_path, user_file_name)
-
-	userFile = open("userPath.txt", "w")
-	userFile.write(folder_path+"/")
-	userFile.close()
-
-	return folder_path
-
-
-	#open1 = open(user_path)
-	#print(open1.read())
-	
-
-
-
-
-
-
 #Fetches the manga by title and returns the json response
 
 def get_manga_id(title):
@@ -136,12 +108,16 @@ def images_to_PDF(completions, pdfNum):
 def main():
 
 	if os.path.exists(LOCAL_PATH):
+		print("Folder already exists")
 		pass
 	else:
 		os.makedirs(LOCAL_PATH)
-		userFile = open("userPath.txt", "w")
+		userFile = open(LOCAL_FILE, "w")
 		userFile.write(LOCAL_PATH)
+		print(userFile.read())
 		userFile.close()
+
+
 
 
 
