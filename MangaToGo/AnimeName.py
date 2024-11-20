@@ -47,7 +47,8 @@ def get_chapter_id(mangaid):
 	ids = [( chapters["id"], 
 		chapters["attributes"]["volume"], 
 		chapters["attributes"]["chapter"],
-		chapters["attributes"]["translatedLanguage"]) for chapters in jsonResponse["data"]]	
+		chapters["attributes"]["translatedLanguage"],
+		chapters["attributes"]["externalURL"]) for chapters in jsonResponse["data"]]	
 
 	return ids
 
@@ -106,7 +107,7 @@ def images_to_PDF(completions, pdfNum):
 
 
 
-
+#######################################################################################################
 
 
 def main():
@@ -145,10 +146,11 @@ def main():
 		int(x[1]) if x[1] is not None else 0,
 		str(x[2]),
 		x[3] if x[3] is not None else '',
+		x[4] if x[4] is not 'null', 
 	))
 
-
 	print(sorted_data)
+
 
 	for x in range(len(sorted_data)):
 		element = sorted_data.pop(0)
