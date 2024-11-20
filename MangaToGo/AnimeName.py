@@ -139,8 +139,6 @@ def main():
 
 	ids = get_chapter_id(mangaID)
 
-	#print(json.dumps(ids,indent=2))
-
 
 	filtered_data = [item for item in ids if item[3] == "en"]
 	sorted_data = sorted(filtered_data, key=lambda x: (
@@ -148,10 +146,6 @@ def main():
 		str(x[2]),
 		x[3] if x[3] is not None else '',
 	))
-
-
-	#print(json.dumps(sorted_data,indent=2))
-
 
 	for x in range(len(sorted_data)):
 		element = sorted_data.pop(0)
