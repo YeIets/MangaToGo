@@ -4,13 +4,13 @@ import json
 import os, os.path
 from pathlib import Path
 
+home = os.path.expanduser('~')
+nested = 'MangaToGO/Chapters'
 
 BASE_URL = 'https://api.mangadex.org/'
 BASE_URL_DOWNLOAD = 'https://uploads.mangadex.org/data-saver/'
 LOCAL_PATH = home + '/MangaToGO/Chapters'
 
-home = os.path.expanduser('~')
-nested = 'MangaToGO/Chapters'
 
 
 
