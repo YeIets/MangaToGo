@@ -7,6 +7,11 @@ from pathlib import Path
 
 BASE_URL = 'https://api.mangadex.org/'
 BASE_URL_DOWNLOAD = 'https://uploads.mangadex.org/data-saver/'
+LOCAL_PATH = home + '/MangaToGO/Chapters'
+
+home = os.path.expanduser('~')
+nested = 'MangaToGO/Chapters'
+
 
 
 #Creates a file with the folder path where the downloaded images and the pdf will be saved
@@ -29,10 +34,6 @@ def create_path_file(folder_path):
 	#open1 = open(user_path)
 	#print(open1.read())
 	
-
-
-LOCAL_PATH = create_path_file()
-LOCAL_FILE = LOCAL_PATH + "/userPath.txt"
 
 
 
@@ -132,7 +133,11 @@ def images_to_PDF(completions, pdfNum):
 
 def main():
 
-	
+	if os.path.exists(LOCAL_PATH):
+		pass
+	else:
+		os.mkdirs(nested)
+
 
 
 
