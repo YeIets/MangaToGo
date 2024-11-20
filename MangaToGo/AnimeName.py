@@ -147,8 +147,8 @@ def main():
 		x[3] if x[3] is not None else '',
 	))
 
-	for x in range(len(sorted_data)):
-		element = sorted_data.pop(0)
+	for x in range(len(sorted_data):
+		element = ids.pop(0)
 		sorted_data.append(element)
 
 		print(f"{x+1} Chapter = {element[2]} - ID = {element[x][0]}")
