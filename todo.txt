@@ -1,0 +1,11 @@
+#get_chapter_id(mangaid, langugaes).
+
+Preguntar por los idiomas deseados:
+
+English = en
+Castellano = es
+Español Latino = es-la
+
+ETC
+
+Y filtrar en los parametros de la http request (EN REQUEST.GET {PARAMS})

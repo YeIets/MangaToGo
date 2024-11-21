@@ -40,7 +40,7 @@ def get_manga_id(title):
 
 #Fetches the manga chapter given the manga ID and returns the json response
 
-def get_chapter_id(mangaid):
+def get_chapter_id(mangaid, languages):
 
 	languages = ["en"]
 
@@ -51,7 +51,6 @@ def get_chapter_id(mangaid):
 	)
 
 	jsonResponse = response.json()
-	print(json.dumps(jsonResponse,indent=2))
 
 	ids = [( chapters["id"], 
 		chapters["attributes"]["volume"], 
