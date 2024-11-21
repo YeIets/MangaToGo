@@ -150,10 +150,12 @@ def main():
 	print("Castellano = es ---> 3")
 
 	languages = ["en", "es-la", "es"]
-	desiredLanguage = (int(input()) -1 ) 
+	item = int(input()) -1
+
+	desiredLanguage = [languages[item]]
 
 
-	ids = get_chapter_id(mangaID)
+	ids = get_chapter_id(mangaID, desiredLanguage)
 
 
 
