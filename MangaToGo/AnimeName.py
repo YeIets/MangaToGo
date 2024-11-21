@@ -152,8 +152,8 @@ def main():
 
 	filtered_data = [item for item in ids if item[4] == None]
 	sorted_data = sorted(filtered_data, key=lambda x: (
+		int(x[2]),
 		int(x[1]) if x[1] is not None else 0,
-		str(x[2]),
 		x[3] if x[3] is not None else '',
 	))
 
