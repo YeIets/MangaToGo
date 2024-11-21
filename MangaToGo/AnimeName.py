@@ -41,8 +41,14 @@ def get_manga_id(title):
 #Fetches the manga chapter given the manga ID and returns the json response
 
 def get_chapter_id(mangaid):
+
+	languages = ["en", "es", "es-la"]
+
 	url = f"{BASE_URL}/manga/{mangaid}/feed"
-	response = requests.get(url)
+	response = requests.get(
+		url,
+		params={"translatedLanguage":languages}
+	)
 
 	jsonResponse = response.json()
 
@@ -142,7 +148,7 @@ def main():
 	ids = get_chapter_id(mangaID)
 
 
-	#print(ids[16][4] == None)
+	print(json.dumps(ids,indent=2))
 
 
 	filtered_data = [item for item in ids if item[3] == "en"]
