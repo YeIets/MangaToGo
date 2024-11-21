@@ -144,7 +144,7 @@ def main():
 	desiredManga = int(input("Which manga do you want?"))
 	mangaID = manga[desiredManga-1][0]
 
-	print(Which language do you prefer?)
+	print("Which language do you prefer?")
 	print("English = en ---> 1")
 	print("Español Latino = es-la ---> 2")
 	print("Castellano = es ---> 3")
