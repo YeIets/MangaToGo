@@ -12,6 +12,8 @@ BASE_URL_DOWNLOAD = 'https://uploads.mangadex.org/data-saver/'
 LOCAL_PATH = home + '/MangaToGO/Chapters'
 LOCAL_FILE = home + '/MangaToGO/userPath.txt'
 
+##########################################################################
+
 def get_local_folder():
 	f = open(LOCAL_FILE, "r")
 	return f.read()
