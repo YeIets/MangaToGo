@@ -166,7 +166,7 @@ def main():
 		x[3] if x[3] is not None else '',
 	))
 
-	print(filtered_data)
+	#print(filtered_data)
 
 	for x in range(len(sorted_data)):
 		element = sorted_data.pop(0)
