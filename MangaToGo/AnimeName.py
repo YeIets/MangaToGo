@@ -12,11 +12,18 @@ BASE_URL_DOWNLOAD = 'https://uploads.mangadex.org/data-saver/'
 LOCAL_PATH = home + '/MangaToGO/Chapters'
 LOCAL_FILE = home + '/MangaToGO/userPath.txt'
 
+##########################################################################
+
+def get_local_folder():
+	f = open(LOCAL_FILE, "r")
+	return f.read()
+
+
 
 #Fetches the manga by title and returns the json response
 
 def get_manga_id(title):
-	url = f"{base_url}/manga"
+	url = f"{BASE_URL}/manga"
 	response = requests.get(
 		url,
 		params={"title":title}
@@ -42,7 +49,8 @@ def get_chapter_id(mangaid):
 	ids = [( chapters["id"], 
 		chapters["attributes"]["volume"], 
 		chapters["attributes"]["chapter"],
-		chapters["attributes"]["translatedLanguage"]) for chapters in jsonResponse["data"]]	
+		chapters["attributes"]["translatedLanguage"],
+		chapters["attributes"]["externalUrl"]) for chapters in jsonResponse["data"]]	
 
 	return ids
 
@@ -69,12 +77,10 @@ def download_image(completions, hash):
     for x in range(len(completions)):
 
         image_url = f'{BASE_URL_DOWNLOAD}/{hash}/{completions[x]}'
-        save_as = f"Img{x}.jpg"
+        save_as = f"{get_local_folder()}/Img{x}.jpg"
 
-        # This line should be at the same level as the above ones
         response = requests.get(image_url)
 
-        # This block should be inside the for loop
         with open(save_as, 'wb') as file:
             file.write(response.content)
 
@@ -88,20 +94,22 @@ def images_to_PDF(completions, pdfNum):
     target_size = (1080, 1696)
 
     images = [
-        Image.open(f"{LOCAL_PATH}/Img{x}.jpg").resize(target_size)
+        Image.open(f"{get_local_folder()}/Img{x}.jpg").resize(target_size)
         for x in range(len(completions))
     ]
 
-    pdf_path = f"{LOCAL_PATH}/Chapter{pdfNum}.pdf"
+    pdf_path = f"{get_local_folder()}/Chapter{pdfNum}.pdf"
     
     # Save the first image and append the rest as a PDF
     images[0].save(
         pdf_path, "PDF", resolution=100.0, save_all=True, append_images=images[1:], dpi=(100, 100)
     )
 
+    print("DONE")
 
 
 
+#######################################################################################################
 
 
 def main():
@@ -113,32 +121,6 @@ def main():
 		userFile = open(LOCAL_FILE, "w")
 		userFile.write(LOCAL_PATH)
 		userFile.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	#manga is a "list" and manga's elements are "tuples" containing strings
@@ -156,22 +138,16 @@ def main():
 	desiredManga = int(input("Which manga do you want?"))
 	
 	mangaID = manga[desiredManga-1][0]
-	#print(mangaID)
 
 	ids = get_chapter_id(mangaID)
 
-	#print(json.dumps(ids,indent=2))
 
-
-	filtered_data = [item for item in ids if item[3] == "en"]
+	filtered_data = [item for item in ids if item[4] == None]
 	sorted_data = sorted(filtered_data, key=lambda x: (
 		int(x[1]) if x[1] is not None else 0,
 		str(x[2]),
 		x[3] if x[3] is not None else '',
 	))
-
-
-	#print(json.dumps(sorted_data,indent=2))
 
 
 	for x in range(len(sorted_data)):
@@ -197,7 +173,7 @@ def main():
 	images_to_PDF(url_completions, desiredChapter)
 
 	for x in range(len(url_completions)):
-		os.remove(f"{local_folder}/Img{x}.jpg")
+		os.remove(f"{get_local_folder()}/Img{x}.jpg")
 
 
 
