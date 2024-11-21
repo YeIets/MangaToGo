@@ -138,7 +138,6 @@ def main():
 	desiredManga = int(input("Which manga do you want?"))
 	
 	mangaID = manga[desiredManga-1][0]
-	#print(mangaID)
 
 	ids = get_chapter_id(mangaID)
 
