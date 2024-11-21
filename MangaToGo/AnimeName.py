@@ -155,7 +155,7 @@ def main():
 	desiredLanguage = [languages[item]]
 
 
-	ids = get_chapter_id(mangaID, desiredLanguage)
+	ids = get_chapter_id(mangaID, ["es-la", "es"])
 
 
 
