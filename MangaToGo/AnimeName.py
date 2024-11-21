@@ -142,7 +142,7 @@ def main():
 	ids = get_chapter_id(mangaID)
 
 
-	print(json.dumps(ids,indent=2))
+	print(ids[0])
 
 
 	filtered_data = [item for item in ids if item[3] == 'en']
