@@ -142,7 +142,7 @@ def main():
 	ids = get_chapter_id(mangaID)
 
 
-	print(ids[0])
+	print(ids[0][4])
 
 
 	filtered_data = [item for item in ids if item[3] == 'en']
