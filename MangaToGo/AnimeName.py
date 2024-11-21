@@ -143,14 +143,12 @@ def main():
 	ids = get_chapter_id(mangaID)
 
 
-	filtered_data = [item for item in ids if item[3] == "en" and item[4] == None]
+	filtered_data = [item for item in ids if (item[3] == "en" and item[4] == None)]
 	sorted_data = sorted(filtered_data, key=lambda x: (
 		int(x[1]) if x[1] is not None else 0,
 		str(x[2]),
 		x[3] if x[3] is not None else '',
 	))
-
-	print(sorted_data)
 
 
 	for x in range(len(sorted_data)):
