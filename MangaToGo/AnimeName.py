@@ -42,7 +42,7 @@ def get_manga_id(title):
 
 def get_chapter_id(mangaid):
 
-	languages = ["en", "es", "es-la"]
+	languages = ["en"]
 
 	url = f"{BASE_URL}/manga/{mangaid}/feed"
 	response = requests.get(
