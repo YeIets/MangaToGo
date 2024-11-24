@@ -4,6 +4,27 @@ import json
 import os, os.path
 from pathlib import Path
 
+##########################################################################
+
+#Author/Coder/idk: Yelets / Dorararararararara (Same person
+#Version: 0.0.1 #Date: 2024-11-11
+
+#Version 0.1.0  #Date: 2024-11-24
+
+#Dont even know what im doing with the version is this an alpha? beta?
+#do you even rate it like videogames? idk
+
+#Title: MangaToGo
+
+#Desc: Mangadex Manga fetcher
+#Asks for a manga title, dislpay the chapters
+#Asks for the target chapter, download the chapter imgs then append them 
+#into a pdf
+
+
+
+##########################################################################
+
 home = os.path.expanduser('~')
 nested = 'MangaToGO/Chapters'
 
@@ -40,19 +61,61 @@ def get_manga_id(title):
 
 #Fetches the manga chapter given the manga ID and returns the json response
 
-def get_chapter_id(mangaid):
-	url = f"{BASE_URL}/manga/{mangaid}/feed"
-	response = requests.get(url)
+def get_chapters_with_offset(mangaid, limit=20, offset=0):
+    languages = ["en"]
 
-	jsonResponse = response.json()
+    # Define the request parameters
+    params = {
+        "translatedLanguage[]": languages,  # Language filter
+        "order[volume]": "asc",             # Sorting by volume ascending
+        "order[chapter]": "asc",            # Sorting by chapter ascending
+        "limit": limit,                     # Number of items per page
+        "offset": offset                    # Skip previous items
+    }
 
-	ids = [( chapters["id"], 
-		chapters["attributes"]["volume"], 
-		chapters["attributes"]["chapter"],
-		chapters["attributes"]["translatedLanguage"],
-		chapters["attributes"]["externalUrl"]) for chapters in jsonResponse["data"]]	
+    # Make the API request
+    url = f"{BASE_URL}/manga/{mangaid}/feed"
+    response = requests.get(url, params=params)
 
-	return ids
+    if response.status_code == 200:
+        jsonResponse = response.json()
+
+        # Check if the response contains data
+        if not jsonResponse["data"]:
+            return None  # No more chapters to fetch
+        
+        # Extract the relevant chapter information
+        chapters = [(
+
+        	chapter["id"],  #0
+        	chapter["attributes"]["volume"], #1
+            chapter["attributes"]["chapter"], #2
+            chapter["attributes"]["title"], #3
+            chapter["attributes"]["externalUrl"], #4
+            )
+
+            for chapter in jsonResponse["data"]
+        ]
+        return chapters
+    else:
+        print(f"Error: {response.status_code}")
+        return None
+
+def fetch_all_chapters(mangaid, limit=20):
+    offset = 0
+    all_chapters = []
+
+    while True:
+        chapters = get_chapters_with_offset(mangaid, limit, offset)
+        
+        if not chapters:
+            break  # No more chapters to fetch
+        
+        all_chapters.extend(chapters)
+        offset += limit  # Move to the next page
+
+    return all_chapters
+	
 
 #Fetches the manga chapters "URL" for each image and the HASH to complete the urls  
 
@@ -89,16 +152,16 @@ def download_image(completions, hash):
 #The pdf is saved to the same path where the images where downloaded
 
 
-def images_to_PDF(completions, pdfNum):
+def images_to_PDF(NumberImages, mangaTitle, chapterTitle, pdfNum):
     
     target_size = (1080, 1696)
 
     images = [
         Image.open(f"{get_local_folder()}/Img{x}.jpg").resize(target_size)
-        for x in range(len(completions))
+        for x in range(NumberImages)
     ]
 
-    pdf_path = f"{get_local_folder()}/Chapter{pdfNum}.pdf"
+    pdf_path = f"{get_local_folder()}/{mangaTitle}-{chapterTitle}-{pdfNum}.pdf"
     
     # Save the first image and append the rest as a PDF
     images[0].save(
@@ -123,8 +186,7 @@ def main():
 		userFile.close()
 
 
-	#manga is a "list" and manga's elements are "tuples" containing strings
-
+	#Ask for the namne of the manga and looks for all the matches
 	nameSearch = input("Search for a manga: ")
 	manga = get_manga_id(nameSearch)
 
@@ -132,47 +194,47 @@ def main():
 	for x in range(len(manga)):
 		element = manga.pop(0)
 		manga.append(element)
-		print(f"{x+1} - {element[1]}")
+		print(f"{x+1} - {element[1]['en']}")
 
-	#Asks for the manga and stores it
+	#Asks for the desired manga option and stores its ID and TITLE
 	desiredManga = int(input("Which manga do you want?"))
-	
 	mangaID = manga[desiredManga-1][0]
+	mangaTitle = manga[desiredManga-1][1]['en']
 
-	ids = get_chapter_id(mangaID)
+	ids = fetch_all_chapters(mangaID)
 
+	#Filters the fetched chapter by "externalUrl", all mangas that have a chapter within another website wont be showed
+	#This can be changed in the get_chapters_with_offset params fields
 
 	filtered_data = [item for item in ids if item[4] == None]
-	sorted_data = sorted(filtered_data, key=lambda x: (
-		int(x[1]) if x[1] is not None else 0,
-		str(x[2]),
-		x[3] if x[3] is not None else '',
-	))
 
+	#Prints all the manga's chapters (filtered_data elements) 
+	for x in range(len(filtered_data)):
+		element = filtered_data.pop(0)
+		filtered_data.append(element)
 
-	for x in range(len(sorted_data)):
-		element = sorted_data.pop(0)
-		sorted_data.append(element)
+		print(f"{x+1} - Vol = {element[1]}  -  Chapter={element[2]}     -  Title = {element[3]}")
 
-		print(f"{x+1} - Vol = {element[1]} - Chapter = {element[2]} - Language = {element[3]}")
-
-	#Asks for the manga chapter and stores it	
+	#Asks for the manga chapter and stores its ID and TITLE
 	desiredChapter = int(input("Which chapter do you want?"))
+	chapterID = filtered_data[desiredChapter-1][0]
+	chapterTitle = filtered_data[desiredChapter-1][3]
+	chapterNum = filtered_data[desiredChapter-1][2]
 
-	chapterID = sorted_data[desiredChapter-1][0]
-	#print(chapterID)
-
-
+	#Fetches bot the HASH and the URL completions for each chapter img
 	imgs = get_chapter_imgs(chapterID)
 
+	#Pop the data and store it
 	url_hash = imgs.pop(0)
 	url_completions = imgs.pop(0)
 
+	NumberImages = len(url_completions)
+
 	download_image(url_completions,url_hash)
 
-	images_to_PDF(url_completions, desiredChapter)
+	images_to_PDF(NumberImages, mangaTitle, chapterTitle, chapterNum)
 
-	for x in range(len(url_completions)):
+	for x in range(NumberImages):
 		os.remove(f"{get_local_folder()}/Img{x}.jpg")
 
 
