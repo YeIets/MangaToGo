@@ -66,11 +66,11 @@ def get_chapters_with_offset(mangaid, limit=20, offset=0):
         # Extract the relevant chapter information
         chapters = [(
 
-        	chapter["id"], 
-        	chapter["attributes"]["volume"], 
-            chapter["attributes"]["chapter"], 
-            chapter["attributes"]["title"],
-            chapter["attributes"]["externalUrl"],
+        	chapter["id"],  #0
+        	chapter["attributes"]["volume"], #1
+            chapter["attributes"]["chapter"], #2
+            chapter["attributes"]["title"], #3
+            chapter["attributes"]["externalUrl"], #4
             )
 
             for chapter in jsonResponse["data"]
@@ -186,7 +186,7 @@ def main():
 	#print(json.dumps(ids,indent=2))
 
 
-	filtered_data = [item for item in ids if item[3] == None]
+	filtered_data = [item for item in ids if item[4] == None]
 	#sorted_data = sorted(filtered_data, key=lambda x: (
 	#	float(x[2]),
 	#	int(x[1]) if x[1] is not None else 0,
@@ -199,7 +199,7 @@ def main():
 		element = filtered_data.pop(0)
 		filtered_data.append(element)
 
-		print(f"{x+1} - Vol = {element[1]} - Chapter = {element[2]} - Language = {element[3]}")
+		print(f"{x+1} - Vol = {element[1]}   -   Chapter = {element[2]}   -   Title = {element[3]}")
 
 	#Asks for the manga chapter and stores it	
 	desiredChapter = int(input("Which chapter do you want?"))
