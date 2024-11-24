@@ -41,7 +41,7 @@ def get_manga_id(title):
 #Fetches the manga chapter given the manga ID and returns the json response
 
 def get_chapters_with_offset(mangaid, limit=20, offset=0):
-    languages = ["es-la"]
+    languages = ["en"]
 
     # Define the request parameters
     params = {
@@ -65,7 +65,7 @@ def get_chapters_with_offset(mangaid, limit=20, offset=0):
         
         # Extract the relevant chapter information
         chapters = [
-            (chapter["id"], chapter["attributes"]["volume"], chapter["attributes"]["chapter"])
+            (chapter["id"], chapter["attributes"]["volume"], chapter["attributes"]["chapter"], chapter["attributes"]["externalUrl"])
             for chapter in jsonResponse["data"]
         ]
         return chapters
