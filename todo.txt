@@ -6,6 +6,28 @@ English = en
 Castellano = es
 Español Latino = es-la
 
-ETC
+##########################################################################
 
-Y filtrar en los parametros de la http request (EN REQUEST.GET {PARAMS})
+Hacer el fetch correcto de los nombres de los mangas al igual que con 
+los capitulos del manga y maybe filtrarlos por popularidad o algo asi
+checar los docs 
+
+https://api.mangadex.org/docs/
+https://api.mangadex.org/docs/redoc.html
+https://api.mangadex.org/docs/swagger.html
+
+##########################################################################
+
+Encontrar algun metodo o algo para poner bien el formato del "menu"
+cuando se despliegan los capitulos 
+
+
+##########################################################################
+
+Encontrar una manera de cambiar la opcion elegida.
+
+e.g, Si ya buscaste un manga, pero quieres otro, o te equivocaste al 
+escribirlo, poder volver a preguntar.
+
+Tambien mejorar en Error Handling en caso de que el resultado no exista
+
