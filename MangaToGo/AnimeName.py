@@ -178,7 +178,7 @@ def main():
 	#Asks for the desired manga option and stores its ID and TITLE
 	desiredManga = int(input("Which manga do you want?"))
 	mangaID = manga[desiredManga-1][0]
-	mangaTitle = manga[desiredManga-1][1]
+	mangaTitle = manga[desiredManga-1][1]['en']
 
 	ids = fetch_all_chapters(mangaID)
 
