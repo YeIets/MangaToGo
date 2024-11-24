@@ -169,13 +169,11 @@ def main():
 	nameSearch = input("Search for a manga: ")
 	manga = get_manga_id(nameSearch)
 
-	print(manga[0][1]['en'])
-
 	#Iterates over the manga list ands prints out the NAMES of the manga
 	for x in range(len(manga)):
 		element = manga.pop(0)
 		manga.append(element)
-		print(f"{x+1} - {element[1]}")
+		print(f"{x+1} - {element[1]['en']}")
 
 	#Asks for the desired manga option and stores its ID and TITLE
 	desiredManga = int(input("Which manga do you want?"))
