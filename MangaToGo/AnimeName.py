@@ -64,8 +64,14 @@ def get_chapters_with_offset(mangaid, limit=20, offset=0):
             return None  # No more chapters to fetch
         
         # Extract the relevant chapter information
-        chapters = [
-            (chapter["id"], chapter["attributes"]["volume"], chapter["attributes"]["chapter"], chapter["attributes"]["externalUrl"])
+        chapters = [(
+
+        	chapter["id"], chapter["attributes"]["volume"], 
+            chapter["attributes"]["chapter"], 
+            chapter["attributes"]["title"]
+            chapter["attributes"]["externalUrl"],
+            )
+
             for chapter in jsonResponse["data"]
         ]
         return chapters
