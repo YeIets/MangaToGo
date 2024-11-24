@@ -69,7 +69,7 @@ def get_chapter_id(mangaid):
 		chapters["attributes"]["translatedLanguage"],
 		chapters["attributes"]["externalUrl"]) for chapters in jsonResponse["data"]]	
 
-	return jsonResponse
+	return ids
 	
 
 #Fetches the manga chapters "URL" for each image and the HASH to complete the urls  
