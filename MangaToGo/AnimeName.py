@@ -54,13 +54,14 @@ def get_chapter_id(mangaid):
         "volume": "asc",  # Sort by volume in ascending order
         "chapter": "asc"  # Sort by chapter in ascending order
     }
-    
+
 	url = f"{BASE_URL}/manga/{mangaid}/feed"
 
 	response = requests.get(
 		url,
-		params={"translatedLanguage[]":languages,
-				"order[]":order
+		params={
+			"translatedLanguage[]":languages,
+			"order[]":order
 		}
 	)
 
