@@ -169,6 +169,8 @@ def main():
 	nameSearch = input("Search for a manga: ")
 	manga = get_manga_id(nameSearch)
 
+	print(manga[0][1])
+
 	#Iterates over the manga list ands prints out the NAMES of the manga
 	for x in range(len(manga)):
 		element = manga.pop(0)
@@ -212,7 +214,7 @@ def main():
 
 	images_to_PDF(NumberImages, mangaTitle, chapterTitle, desiredChapter)
 
-	for x in range(NumberImages)
+	for x in range(NumberImages):
 		os.remove(f"{get_local_folder()}/Img{x}.jpg")
 
 
