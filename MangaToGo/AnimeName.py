@@ -196,7 +196,7 @@ def main():
 
 	#Asks for the manga chapter and stores it in chapterID
 	desiredChapter = int(input("Which chapter do you want?"))
-	chapterID = sorted_data[desiredChapter-1][0]
+	chapterID = filtered_data[desiredChapter-1][0]
 
 	#Fetches bot the HASH and the URL completions for each chapter img
 	imgs = get_chapter_imgs(chapterID)
