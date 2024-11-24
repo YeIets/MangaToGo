@@ -50,8 +50,8 @@ def get_chapter_id(mangaid):
 	url = f"{BASE_URL}/manga/{mangaid}/feed"
 	response = requests.get(
 		url,
-		params={"translatedLanguage[]":languages
-			"order":order
+		params={"translatedLanguage[]":languages,
+				"order":order
 		}
 	)
 
