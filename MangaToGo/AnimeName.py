@@ -131,16 +131,16 @@ def download_image(completions, hash):
 #The pdf is saved to the same path where the images where downloaded
 
 
-def images_to_PDF(completions, pdfNum):
+def images_to_PDF(NumberImages, mangaTitle, chapterTitle, pdfNum):
     
     target_size = (1080, 1696)
 
     images = [
         Image.open(f"{get_local_folder()}/Img{x}.jpg").resize(target_size)
-        for x in range(len(completions))
+        for x in range(NumberImages)
     ]
 
-    pdf_path = f"{get_local_folder()}/Chapter{pdfNum}.pdf"
+    pdf_path = f"{get_local_folder()}/{mangaTitle}-{chapterTitle}-{pdfNum}.pdf"
     
     # Save the first image and append the rest as a PDF
     images[0].save(
@@ -175,10 +175,10 @@ def main():
 		manga.append(element)
 		print(f"{x+1} - {element[1]}")
 
-	#Asks for the desired manga option and stores its id in mangaID 
+	#Asks for the desired manga option and stores its ID and TITLE
 	desiredManga = int(input("Which manga do you want?"))
 	mangaID = manga[desiredManga-1][0]
-
+	mangaTitle = manga[desiredManga-1][1]
 
 	ids = fetch_all_chapters(mangaID)
 
@@ -194,9 +194,10 @@ def main():
 
 		print(f"{x+1} - Vol = {element[1]}  -  Chapter={element[2]}     -  Title = {element[3]}")
 
-	#Asks for the manga chapter and stores it in chapterID
+	#Asks for the manga chapter and stores its ID and TITLE
 	desiredChapter = int(input("Which chapter do you want?"))
 	chapterID = filtered_data[desiredChapter-1][0]
+	chapterTitle = filtered_data[desiredChapter-1][3]
 
 	#Fetches bot the HASH and the URL completions for each chapter img
 	imgs = get_chapter_imgs(chapterID)
@@ -205,11 +206,13 @@ def main():
 	url_hash = imgs.pop(0)
 	url_completions = imgs.pop(0)
 
+	NumberImages = len(url_completions)
+
 	download_image(url_completions,url_hash)
 
-	images_to_PDF(url_completions, desiredChapter)
+	images_to_PDF(NumberImages, mangaTitle, chapterTitle, desiredChapter)
 
-	for x in range(len(url_completions)):
+	for x in range(NumberImages:
 		os.remove(f"{get_local_folder()}/Img{x}.jpg")
 
 
