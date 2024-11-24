@@ -48,6 +48,7 @@ def get_all_chapters(mangaid):
     all_chapters = []
 
     while True:
+    	
         params = {
             "translatedLanguage[]": languages,
             "order[volume]": "asc",
