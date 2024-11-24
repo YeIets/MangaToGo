@@ -14,6 +14,12 @@ LOCAL_FILE = home + '/MangaToGO/userPath.txt'
 
 ##########################################################################
 
+class order:
+	chapter = "asc"
+	volume = "asc "
+
+
+
 def get_local_folder():
 	f = open(LOCAL_FILE, "r")
 	return f.read()
@@ -42,6 +48,8 @@ def get_manga_id(title):
 
 def get_chapter_id(mangaid):
 
+	p1 = order()
+
 	languages = ["es-la"]
 	order = {"volume": "asc", "chapter":  "asc"}
 
@@ -49,7 +57,7 @@ def get_chapter_id(mangaid):
 	response = requests.get(
 		url,
 		params={"translatedLanguage[]":languages,
-				"order":order
+				"order":p1
 		}
 	)
 
