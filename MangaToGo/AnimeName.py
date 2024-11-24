@@ -169,7 +169,7 @@ def main():
 	nameSearch = input("Search for a manga: ")
 	manga = get_manga_id(nameSearch)
 
-	print(manga[0][1])
+	print(manga[0][1]['en'])
 
 	#Iterates over the manga list ands prints out the NAMES of the manga
 	for x in range(len(manga)):
