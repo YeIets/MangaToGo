@@ -40,44 +40,51 @@ def get_manga_id(title):
 
 #Fetches the manga chapter given the manga ID and returns the json response
 
-def get_all_chapters(mangaid):
+def get_chapters_with_offset(mangaid, limit=20, offset=0):
+    languages = ["es-la"]
 
-    languages = ["en"]
-    page = 1
-    limit = 20
+    # Define the request parameters
+    params = {
+        "translatedLanguage[]": languages,  # Language filter
+        "order[volume]": "asc",             # Sorting by volume ascending
+        "order[chapter]": "asc",            # Sorting by chapter ascending
+        "limit": limit,                     # Number of items per page
+        "offset": offset                    # Skip previous items
+    }
+
+    # Make the API request
+    url = f"{BASE_URL}/manga/{mangaid}/feed"
+    response = requests.get(url, params=params)
+
+    if response.status_code == 200:
+        jsonResponse = response.json()
+
+        # Check if the response contains data
+        if not jsonResponse["data"]:
+            return None  # No more chapters to fetch
+        
+        # Extract the relevant chapter information
+        chapters = [
+            (chapter["id"], chapter["attributes"]["volume"], chapter["attributes"]["chapter"])
+            for chapter in jsonResponse["data"]
+        ]
+        return chapters
+    else:
+        print(f"Error: {response.status_code}")
+        return None
+
+def fetch_all_chapters(mangaid, limit=20):
+    offset = 0
     all_chapters = []
 
     while True:
-
-        params = {
-            "translatedLanguage[]": languages,
-            "order[volume]": "asc",
-            "order[chapter]": "asc",
-            "page": page,
-            "limit": limit
-        }
-
-        url = f"{BASE_URL}/manga/{mangaid}/feed"
-        response = requests.get(url, params=params)
-
-        if response.status_code == 200:
-            jsonResponse = response.json()
-
-            chapters = [
-                (chapter["id"], chapter["attributes"]["volume"], chapter["attributes"]["chapter"])
-                for chapter in jsonResponse["data"]
-            ]
-
-            all_chapters.extend(chapters)
-
-            # Check if there's a next page
-            if jsonResponse["pagination"]["has_next_page"]:
-                page += 1  # Move to the next page
-            else:
-                break  # No more pages, exit the loop
-        else:
-            print(f"Error: {response.status_code}")
-            break
+        chapters = get_chapters_with_offset(mangaid, limit, offset)
+        
+        if not chapters:
+            break  # No more chapters to fetch
+        
+        all_chapters.extend(chapters)
+        offset += limit  # Move to the next page
 
     return all_chapters
 	
@@ -167,7 +174,7 @@ def main():
 	mangaID = manga[desiredManga-1][0]
 
 
-	ids = get_all_chapters(mangaID)
+	ids = fetch_all_chapters(mangaID)
 
 	print(json.dumps(ids,indent=2))
 
