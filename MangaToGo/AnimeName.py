@@ -67,7 +67,7 @@ def get_all_chapters(mangaid):
                 (chapter["id"], chapter["attributes"]["volume"], chapter["attributes"]["chapter"])
                 for chapter in jsonResponse["data"]
             ]
-            
+
             all_chapters.extend(chapters)
 
             # Check if there's a next page
@@ -167,7 +167,7 @@ def main():
 	mangaID = manga[desiredManga-1][0]
 
 
-	ids = get_chapter_id(mangaID)
+	ids = get_all_chapters(mangaID)
 
 	print(json.dumps(ids,indent=2))
 
