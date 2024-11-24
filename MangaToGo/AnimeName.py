@@ -61,7 +61,7 @@ def get_chapter_id(mangaid):
 		url,
 		params={
 			"translatedLanguage[]":languages,
-			"order[]":order
+			"order":order
 		}
 	)
 
