@@ -40,36 +40,43 @@ def get_manga_id(title):
 
 #Fetches the manga chapter given the manga ID and returns the json response
 
-def get_chapter_id(mangaid):
+def get_all_chapters(mangaid):
 
-	languages = ["en"]
+    languages = ["en"]
+    page = 1
+    limit = 20
+    all_chapters = []
 
-	order = {
-        "volume": "asc",  # Sort by volume in ascending order
-        "chapter": "asc"  # Sort by chapter in ascending order
-    }
+    while True:
+        params = {
+            "translatedLanguage[]": languages,
+            "order[volume]": "asc",
+            "order[chapter]": "asc",
+            "page": page,
+            "limit": limit
+        }
 
-	url = f"{BASE_URL}/manga/{mangaid}/feed"
+        url = f"{BASE_URL}/manga/{mangaid}/feed"
+        response = requests.get(url, params=params)
 
-	response = requests.get(
-		url,
-		params={
-			"translatedLanguage[]": languages,
-			"order[chapter]": "asc",
-			"order[volume]": "asc"
-		}
-	)
+        if response.status_code == 200:
+            jsonResponse = response.json()
+            chapters = [
+                (chapter["id"], chapter["attributes"]["volume"], chapter["attributes"]["chapter"])
+                for chapter in jsonResponse["data"]
+            ]
+            all_chapters.extend(chapters)
 
-	jsonResponse = response.json()
-	#print(json.dumps(jsonResponse,indent=2))
+            # Check if there's a next page
+            if jsonResponse["pagination"]["has_next_page"]:
+                page += 1  # Move to the next page
+            else:
+                break  # No more pages, exit the loop
+        else:
+            print(f"Error: {response.status_code}")
+            break
 
-	ids = [( chapters["id"], 
-		chapters["attributes"]["volume"], 
-		chapters["attributes"]["chapter"],
-		chapters["attributes"]["translatedLanguage"],
-		chapters["attributes"]["externalUrl"]) for chapters in jsonResponse["data"]]	
-
-	return ids
+    return all_chapters
 	
 
 #Fetches the manga chapters "URL" for each image and the HASH to complete the urls  
