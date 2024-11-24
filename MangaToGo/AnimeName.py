@@ -66,9 +66,10 @@ def get_chapters_with_offset(mangaid, limit=20, offset=0):
         # Extract the relevant chapter information
         chapters = [(
 
-        	chapter["id"], chapter["attributes"]["volume"], 
+        	chapter["id"], 
+        	chapter["attributes"]["volume"], 
             chapter["attributes"]["chapter"], 
-            chapter["attributes"]["title"]
+            chapter["attributes"]["title"],
             chapter["attributes"]["externalUrl"],
             )
 
