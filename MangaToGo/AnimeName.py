@@ -54,7 +54,7 @@ def get_chapter_id(mangaid):
 	response = requests.get(
 		url,
 		params={
-			"translatedLanguage[]": languages
+			"translatedLanguage[]": languages,
 			"order[chapter]": "asc",
 			"order[volume]": "asc"
 		}
