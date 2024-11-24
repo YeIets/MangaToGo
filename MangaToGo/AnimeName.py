@@ -48,7 +48,9 @@ def get_manga_id(title):
 
 def get_chapter_id(mangaid):
 
-	p1 = order()
+	P1 = order()
+	print(P1.chapter)
+	print(P1.volume)
 
 	languages = ["es-la"]
 	order = {"volume": "asc", "chapter":  "asc"}
