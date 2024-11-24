@@ -199,7 +199,7 @@ def main():
 		element = filtered_data.pop(0)
 		filtered_data.append(element)
 
-		print(f"{x+1} - Vol = {element[1]}   -   Chapter = {element[2]}   -   Title = {element[3]}")
+		print(f"{x+1} - Vol = {element[1]}   -   Chapter={element[2]}     -   Title = {element[3]}")
 
 	#Asks for the manga chapter and stores it	
 	desiredChapter = int(input("Which chapter do you want?"))
