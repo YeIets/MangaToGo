@@ -48,7 +48,7 @@ def get_all_chapters(mangaid):
     all_chapters = []
 
     while True:
-    	
+
         params = {
             "translatedLanguage[]": languages,
             "order[volume]": "asc",
@@ -62,10 +62,12 @@ def get_all_chapters(mangaid):
 
         if response.status_code == 200:
             jsonResponse = response.json()
+
             chapters = [
                 (chapter["id"], chapter["attributes"]["volume"], chapter["attributes"]["chapter"])
                 for chapter in jsonResponse["data"]
             ]
+            
             all_chapters.extend(chapters)
 
             # Check if there's a next page
