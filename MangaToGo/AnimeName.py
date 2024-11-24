@@ -219,6 +219,7 @@ def main():
 	desiredChapter = int(input("Which chapter do you want?"))
 	chapterID = filtered_data[desiredChapter-1][0]
 	chapterTitle = filtered_data[desiredChapter-1][3]
+	chapterNum = filtered_data[desiredChapter-1][2]
 
 	#Fetches bot the HASH and the URL completions for each chapter img
 	imgs = get_chapter_imgs(chapterID)
@@ -231,7 +232,7 @@ def main():
 
 	download_image(url_completions,url_hash)
 
-	images_to_PDF(NumberImages, mangaTitle, chapterTitle, desiredChapter)
+	images_to_PDF(NumberImages, mangaTitle, chapterTitle, chapterNum)
 
 	for x in range(NumberImages):
 		os.remove(f"{get_local_folder()}/Img{x}.jpg")
