@@ -212,7 +212,7 @@ def main():
 
 	images_to_PDF(NumberImages, mangaTitle, chapterTitle, desiredChapter)
 
-	for x in range(NumberImages:
+	for x in range(NumberImages)
 		os.remove(f"{get_local_folder()}/Img{x}.jpg")
 
 
