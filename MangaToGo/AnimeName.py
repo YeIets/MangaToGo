@@ -4,6 +4,27 @@ import json
 import os, os.path
 from pathlib import Path
 
+##########################################################################
+
+#Author/Coder/idk: Yelets / Dorararararararara (Same person
+#Version: 0.0.1 #Date: 2024-11-11
+
+#Version 0.1.0  #Date: 2024-11-24
+
+#Dont even know what im doing with the version is this an alpha? beta?
+#do you even rate it like videogames? idk
+
+#Title: MangaToGo
+
+#Desc: Mangadex Manga fetcher
+#Asks for a manga title, dislpay the chapters
+#Asks for the target chapter, download the chapter imgs then append them 
+#into a pdf
+
+
+
+##########################################################################
+
 home = os.path.expanduser('~')
 nested = 'MangaToGO/Chapters'
 
