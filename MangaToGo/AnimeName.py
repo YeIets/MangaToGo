@@ -43,9 +43,7 @@ def get_manga_id(title):
 def get_chapter_id(mangaid):
 
 	languages = ["es-la"]
-	order = {"volume": "asc",
-		"chapter":  "asc"
-	}
+	order = {"volume": "asc", "chapter":  "asc"}
 
 	url = f"{BASE_URL}/manga/{mangaid}/feed"
 	response = requests.get(
