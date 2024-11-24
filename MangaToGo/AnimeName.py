@@ -171,9 +171,9 @@ def main():
 
 	print(filtered_data)
 
-	for x in range(len(sorted_data)):
-		element = sorted_data.pop(0)
-		sorted_data.append(element)
+	for x in range(len(filtered_data)):
+		element = filtered_data.pop(0)
+		filtered_data.append(element)
 
 		print(f"{x+1} - Vol = {element[1]} - Chapter = {element[2]} - Language = {element[3]}")
 
