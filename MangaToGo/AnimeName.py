@@ -176,10 +176,10 @@ def main():
 
 	ids = fetch_all_chapters(mangaID)
 
-	print(json.dumps(ids,indent=2))
+	#print(json.dumps(ids,indent=2))
 
 
-	filtered_data = [item for item in ids if item[4] == None]
+	filtered_data = [item for item in ids if item[3] == None]
 	#sorted_data = sorted(filtered_data, key=lambda x: (
 	#	float(x[2]),
 	#	int(x[1]) if x[1] is not None else 0,
