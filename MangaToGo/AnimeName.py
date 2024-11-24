@@ -183,15 +183,10 @@ def main():
 
 	ids = fetch_all_chapters(mangaID)
 
-	#print(json.dumps(ids,indent=2))
-
-
+	#Filters the fetched chapter by "externalUrl", all mangas that have a chapter within another website wont be showed
+	#This can be changed in the get_chapters_with_offset params fields
 	filtered_data = [item for item in ids if item[4] == None]
-	#sorted_data = sorted(filtered_data, key=lambda x: (
-	#	float(x[2]),
-	#	int(x[1]) if x[1] is not None else 0,
-	#	x[3] if x[3] is not None else '',
-	#))
+
 
 	print(filtered_data)
 
