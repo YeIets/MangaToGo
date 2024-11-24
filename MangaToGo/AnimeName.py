@@ -165,8 +165,7 @@ def main():
 		userFile.close()
 
 
-	#manga is a "list" and manga's elements are "tuples" containing strings
-
+	#Ask for the namne of the manga and looks for all the matches
 	nameSearch = input("Search for a manga: ")
 	manga = get_manga_id(nameSearch)
 
@@ -176,7 +175,7 @@ def main():
 		manga.append(element)
 		print(f"{x+1} - {element[1]}")
 
-	#Asks for the manga and stores it
+	#Asks for the desired manga option and stores its id in mangaID 
 	desiredManga = int(input("Which manga do you want?"))
 	mangaID = manga[desiredManga-1][0]
 
@@ -185,6 +184,7 @@ def main():
 
 	#Filters the fetched chapter by "externalUrl", all mangas that have a chapter within another website wont be showed
 	#This can be changed in the get_chapters_with_offset params fields
+
 	filtered_data = [item for item in ids if item[4] == None]
 
 
