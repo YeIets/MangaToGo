@@ -187,24 +187,21 @@ def main():
 
 	filtered_data = [item for item in ids if item[4] == None]
 
-
-	print(filtered_data)
-
+	#Prints all the manga's chapters (filtered_data elements) 
 	for x in range(len(filtered_data)):
 		element = filtered_data.pop(0)
 		filtered_data.append(element)
 
 		print(f"{x+1} - Vol = {element[1]}  -  Chapter={element[2]}     -  Title = {element[3]}")
 
-	#Asks for the manga chapter and stores it	
+	#Asks for the manga chapter and stores it in chapterID
 	desiredChapter = int(input("Which chapter do you want?"))
-
 	chapterID = sorted_data[desiredChapter-1][0]
-	#print(chapterID)
 
-
+	#Fetches bot the HASH and the URL completions for each chapter img
 	imgs = get_chapter_imgs(chapterID)
 
+	#Pop the data and store it
 	url_hash = imgs.pop(0)
 	url_completions = imgs.pop(0)
 
