@@ -31,3 +31,12 @@ escribirlo, poder volver a preguntar.
 
 Tambien mejorar en Error Handling en caso de que el resultado no exista
 
+##########################################################################
+
+Editar el README.md con las instrucciones y toda la wea
+Dependencias = Pillow y requests
+
+python -m pip install Pillow
+python -m pip install requests
+
+
