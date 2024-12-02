@@ -31,3 +31,6 @@ escribirlo, poder volver a preguntar.
 
 Tambien mejorar en Error Handling en caso de que el resultado no exista
 
+##########################################################################
+
+Crear un metodo para borrar las fotos descargadas
