@@ -102,6 +102,7 @@ def get_chapters_with_offset(mangaid, limit=20, offset=0):
         return None
 
 def fetch_all_chapters(mangaid, limit=20):
+	
     offset = 0
     all_chapters = []
 
