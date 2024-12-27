@@ -6,13 +6,13 @@ from pathlib import Path
 
 ##########################################################################
 
-#Author/Coder/idk: Yelets / Dorararararararara (Same person
+#Author/Coder/idk: Yelets / Dorararararararara (Same person)
 #Version: 0.0.1 #Date: 2024-11-11
 
 #Version 0.1.0  #Date: 2024-11-24
 
 #Dont even know what im doing with the version is this an alpha? beta?
-#do you even rate it like videogames? idk
+#do you even label them like videogames? idk
 
 #Title: MangaToGo
 
@@ -20,8 +20,6 @@ from pathlib import Path
 #Asks for a manga title, dislpay the chapters
 #Asks for the target chapter, download the chapter imgs then append them 
 #into a pdf
-
-
 
 ##########################################################################
 
@@ -35,34 +33,61 @@ LOCAL_FILE = home + '/MangaToGO/userPath.txt'
 
 ##########################################################################
 
+#Reads the user file or path where it'll store the manga chapter and images  
 def get_local_folder():
 	f = open(LOCAL_FILE, "r")
 	return f.read()
 
+# Get a page of mangas titles and IDs
+def get_mangas_with_offset(title, limit=20, offset=0):
 
+    # Define the request parameters
+    params = {
+    	"title": title,						# Manga Title
+        "limit": limit,                     # Number of items per page
+        "offset": offset                    # Skip previous items
+    }
 
-#Fetches the manga by title and returns the json response
+    # Making the request
+    url = f"{BASE_URL}/manga"
+    response = requests.get(
+    	url,
+    	params=params
+    )
 
-def get_manga_id(title):
-	url = f"{BASE_URL}/manga"
-	response = requests.get(
-		url,
-		params={"title":title}
-	)
-	jsonResponse = response.json()
+    if response.status_code == 200:
+        jsonResponse = response.json()
 
-	#If you want to print the jsonResponse prettyfied
-	#print(json.dumps(jsonResponse,indent=2))
+        # Check if the response contains data
+        if not jsonResponse["data"]:
+            return None  # No more manga titles to fetch
+        
+        # Extract the title and ID for each manga 
+        ids = [( mangas["id"], mangas["attributes"]["title"]) for mangas in jsonResponse["data"]]
+        return ids
+    else:
+        print(f"Error: {response.status_code}")
+        return None
 
-	ids = [( mangas["id"], mangas["attributes"]["title"]) for mangas in jsonResponse["data"]]
+#Get ALL mangas IDs and titles available
+def fetch_all_mangas(title, limit=20):
+	
+    offset = 0
+    all_mangas = []
 
-	return ids
- 
+    while True:
+        mangas = get_mangas_with_offset(title, limit, offset)
+        
+        if not mangas:
+            break  # No more mangas to fetch
+        
+        all_mangas.extend(mangas)
+        offset += limit  # Move to the next page
+
+    return all_mangas
 
 #Fetches the manga chapter given the manga ID and returns the json response
-
-def get_chapters_with_offset(mangaid, limit=20, offset=0):
-    languages = ["en"]
+def get_chapters_with_offset(mangaid, languages, limit=20, offset=0):
 
     # Define the request parameters
     params = {
@@ -80,6 +105,7 @@ def get_chapters_with_offset(mangaid, limit=20, offset=0):
     if response.status_code == 200:
         jsonResponse = response.json()
 
+
         # Check if the response contains data
         if not jsonResponse["data"]:
             return None  # No more chapters to fetch
@@ -92,21 +118,20 @@ def get_chapters_with_offset(mangaid, limit=20, offset=0):
             chapter["attributes"]["title"], #3
             chapter["attributes"]["externalUrl"], #4
             )
-
             for chapter in jsonResponse["data"]
         ]
         return chapters
     else:
-        print(f"Error: {response.status_code}")
+        #print(f"Error: {response.status_code}")
         return None
 
-def fetch_all_chapters(mangaid, limit=20):
+def fetch_all_chapters(mangaid, languages, limit=20):
 	
     offset = 0
     all_chapters = []
 
     while True:
-        chapters = get_chapters_with_offset(mangaid, limit, offset)
+        chapters = get_chapters_with_offset(mangaid, languages, limit, offset)
         
         if not chapters:
             break  # No more chapters to fetch
@@ -115,7 +140,6 @@ def fetch_all_chapters(mangaid, limit=20):
         offset += limit  # Move to the next page
 
     return all_chapters
-	
 
 #Fetches the manga chapters "URL" for each image and the HASH to complete the urls  
 
@@ -174,72 +198,89 @@ def images_to_PDF(NumberImages, mangaTitle, chapterTitle, pdfNum):
 
 #######################################################################################################
 
-
 def main():
+    if os.path.exists(LOCAL_PATH):
+        pass
+    else:
+        os.makedirs(LOCAL_PATH)
+        userFile = open(LOCAL_FILE, "w")
+        userFile.write(LOCAL_PATH)
+        userFile.close()
 
-	if os.path.exists(LOCAL_PATH):
-		pass
-	else:
-		os.makedirs(LOCAL_PATH)
-		userFile = open(LOCAL_FILE, "w")
-		userFile.write(LOCAL_PATH)
-		userFile.close()
+    # Ask for the name of the manga and looks for all the matches
+    nameSearch = input("Search for a manga: ")
+    manga = fetch_all_mangas(nameSearch)
 
+    #Loops and keeps asking if the results from the request is empty
+    while manga == []:
+        print("0 results found.")
+        print("Search for a manga: ")
+        nameSearch=input()
+        manga = fetch_all_mangas(nameSearch)
 
-	#Ask for the namne of the manga and looks for all the matches
-	nameSearch = input("Search for a manga: ")
-	manga = get_manga_id(nameSearch)
+    # Iterates over the manga list and prints out the NAMES of the manga
+    for x in range(len(manga)):
+        element = manga.pop(0)
+        manga.append(element)
+        print(f"{x+1} - {element[1]['en']}")
 
-	#Iterates over the manga list ands prints out the NAMES of the manga
-	for x in range(len(manga)):
-		element = manga.pop(0)
-		manga.append(element)
-		print(f"{x+1} - {element[1]['en']}")
+    # Asks for the desired manga option and stores its ID and TITLE
+    desiredManga = int(input("Which manga do you want?"))
+    mangaID = manga[desiredManga-1][0]
+    mangaTitle = manga[desiredManga-1][1]['en']
+    
+    print("What are your prefererd languages?")  # This line needs to be at this indentation level
+    print("If you prefer more than 2 languages separete them by a coma ,")  # This line needs to be at this indentation level
+    print("English = en")  # This line needs to be at this indentation level
+    print("Español España = es")  # This line needs to be at this indentation level
+    print("Español Latinoamerica = es-la")  # This line needs to be at this indentation level
 
-	#Asks for the desired manga option and stores its ID and TITLE
-	desiredManga = int(input("Which manga do you want?"))
-	mangaID = manga[desiredManga-1][0]
-	mangaTitle = manga[desiredManga-1][1]['en']
+    #Asks for the preferred languages
+    langs=input()
+    languages=langs.split()
 
-	ids = fetch_all_chapters(mangaID)
+    ids = fetch_all_chapters(mangaID, languages)
 
-	#Filters the fetched chapter by "externalUrl", all mangas that have a chapter within another website wont be showed
-	#This can be changed in the get_chapters_with_offset params fields
+    #Loops and keeps asking if the results from the request is empty
+    while ids == []:
+        print("Not a valid language.")
+        print("Enter a valid option:")
+        langs=input()
+        languages=langs.split()
+        ids = fetch_all_chapters(mangaID, languages)
 
-	filtered_data = [item for item in ids if item[4] == None]
+    # Filters the fetched chapter by "externalUrl", all mangas that have a chapter within another website won't be shown
+    # This can be changed in the get_chapters_with_offset params fields
+    filtered_data = [item for item in ids if item[4] == None]
 
-	#Prints all the manga's chapters (filtered_data elements) 
-	for x in range(len(filtered_data)):
-		element = filtered_data.pop(0)
-		filtered_data.append(element)
+    # Prints all the manga's chapters (filtered_data elements)
+    for x in range(len(filtered_data)):
+        element = filtered_data.pop(0)
+        filtered_data.append(element)
+        print(f"{element[2]} - Vol = {element[1]}  -  Chapter={element[2]}     -  Title = {element[3]}")
 
-		print(f"{x+1} - Vol = {element[1]}  -  Chapter={element[2]}     -  Title = {element[3]}")
+    # Asks for the manga chapter and stores its ID and TITLE
+    desiredChapter = int(input("Which chapter do you want?"))
+    chapterID = filtered_data[desiredChapter-1][0]
+    chapterTitle = filtered_data[desiredChapter-1][3]
+    chapterNum = filtered_data[desiredChapter-1][2]
 
-	#Asks for the manga chapter and stores its ID and TITLE
-	desiredChapter = int(input("Which chapter do you want?"))
-	chapterID = filtered_data[desiredChapter-1][0]
-	chapterTitle = filtered_data[desiredChapter-1][3]
-	chapterNum = filtered_data[desiredChapter-1][2]
+    # Fetches both the HASH and the URL completions for each chapter img
+    imgs = get_chapter_imgs(chapterID)
 
-	#Fetches bot the HASH and the URL completions for each chapter img
-	imgs = get_chapter_imgs(chapterID)
+    # Pop the data and store it
+    url_hash = imgs.pop(0)
+    url_completions = imgs.pop(0)
 
-	#Pop the data and store it
-	url_hash = imgs.pop(0)
-	url_completions = imgs.pop(0)
+    NumberImages = len(url_completions)
 
-	NumberImages = len(url_completions)
+    download_image(url_completions, url_hash)
 
-	download_image(url_completions,url_hash)
+    images_to_PDF(NumberImages, mangaTitle, chapterTitle, chapterNum)
 
-	images_to_PDF(NumberImages, mangaTitle, chapterTitle, chapterNum)
-
-	for x in range(NumberImages):
-		os.remove(f"{get_local_folder()}/Img{x}.jpg")
-
-
-
+    for x in range(NumberImages):
+        os.remove(f"{get_local_folder()}/Img{x}.jpg")
 
 
 if __name__ == '__main__':
-	main()
+    main()
